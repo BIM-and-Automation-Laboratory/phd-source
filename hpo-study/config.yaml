@@ -1,0 +1,53 @@
+type: hpo
+
+datasets: 
+  dirs:
+    - ./datasets/soda-hall
+    - ./datasets/rice-hall
+
+models: 
+  - name: ComplEx
+    embedding_dim: 50
+  - name: DistMult
+    embedding_dim: 50  
+  - name: RotatE
+    embedding_dim: 200
+  - name: TransE
+    embedding_dim: 50
+  - name: TransH
+    embedding_dim: 50
+  # Add more models if needed
+
+optimizer:
+  class: Adagrad
+
+train:
+  loss_function: MarginRankingLoss
+  create_inverse: False
+
+hpo:
+  ntrials: 100
+  sampler:
+    - tpe
+    - random
+  emb:
+    low: 16
+    high: 512
+    step: 16
+  num_epochs:
+    low: 10
+    high: 50
+    step: 10
+  lr:
+    low: 0.001
+    high: 0.1
+  neg:
+    low: 1
+    high: 101
+    step: 10
+
+save:
+  study_name: rotate_rice_hpo_tpe
+  path: ./results/
+
+seed: 42
