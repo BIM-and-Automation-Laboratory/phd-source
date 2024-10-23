@@ -1,0 +1,43 @@
+type: baseline
+
+datasets: 
+  dirs:
+    - ./datasets/soda-hall
+    - ./datasets/rice-hall
+
+models: 
+  - name: ComplEx
+    embedding_dim: 50
+  - name: DistMult
+    embedding_dim: 50  
+  - name: RotatE
+    embedding_dim: 200
+  - name: TransE
+    embedding_dim: 50
+  - name: TransH
+    embedding_dim: 50
+  # Add more models if needed
+
+optimizers:
+  - class: Adagrad
+    lr: 0.02
+  - class: Adam
+    lr: 0.02
+  - class: SGD
+    lr: 0.02
+  # Add more optimizers if needed
+
+training:
+  loss_function:
+    - BCEWithLogitsLoss
+    - SoftplusLoss
+    - MarginRankingLoss
+    - NSSALoss
+  num_epoch: 500
+  num_negative: 1
+  create_inverse: [True, False]
+
+save:
+  path: ./results/
+
+seed: 42
